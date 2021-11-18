@@ -1,0 +1,187 @@
+.datetimepicker-container {
+    width: 277px;
+    z-index: 2000;
+    position: absolute;
+    margin-left: 20%;
+    margin-top: 5px;
+    border: 1px solid grey;
+    justify-content: center;
+    border-radius: 5px;
+    background: white;
+
+    .header{
+        width: inherit;
+        text-align: center;
+        background:#339AF0;
+        color: white;
+        padding-top: 2%;
+        padding-bottom: 2%;
+        border-bottom: 1px solid #339AF0;
+        border-radius: 0px 0px 2px 2px;
+        height: 26px;
+        font-size: 1rem;
+        .select-year,
+        .select-month{
+            margin: 1px;
+            font-weight: bold;
+            &:hover{
+                cursor: pointer;
+            }
+        }
+    }
+
+    .body.datepicker{
+        table thead{
+            th{
+                background: white;
+            }
+        }
+        td:not(:empty){
+            text-align: center;
+            &:hover{
+                cursor: pointer;
+                &:not(.selected){
+                    background-color: #339AF0;
+                    opacity: 0.5;
+                    color: white;
+                    font-weight: bold;
+                    border-radius: 5px;
+                }
+            }
+            &.selected{
+                background: #339AF0;
+                color: white;
+                border-radius: 5px;
+                font-weight: bold;
+            }
+        }
+        th, td, caption {
+            padding: 4px 2px 4px 2px;
+        }
+    }
+
+    .body.hourpicker,
+    .body.minutepicker,
+    .body.yearpicker,
+    .body.monthpicker{
+        margin-bottom: 2px;
+        font-size: 0.8rem;
+        font-weight: bold;
+        .hour-container,
+        .minute-container,
+        .year-container,
+        .month-container {
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: row;
+            justify-content: space-evenly;
+            div{
+                font-size: 0.8rem;
+                width: 66px;
+                height: 65px;
+                text-align: center;
+                line-height: 5rem;
+                &:hover{
+                    cursor: pointer;
+                    border-radius: 5px;
+                    font-weight: bold;
+                    background:#339AF0;
+                    color:white;
+                    opacity: 0.5;
+                }
+            }
+        }
+    }
+
+    .body.timepicker{
+        .time-container{
+            width: 100%;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            padding: 2px 0px 2px 0px;
+            font-size: 1.4rem;
+            .hour-container,
+            .minute-container,
+            .separator-container{
+                display: inline-block;
+                text-align: center;
+                .hour,
+                .minute{
+                    border-radius: 5px;
+                    font-weight: bold;
+                    border: 1px solid lightgrey;
+                    padding: 2px;
+                    &:hover{
+                        cursor: pointer;
+                    }
+                    &:active{
+                        cursor: pointer;
+                        border-radius: 5px;
+                        font-weight: bold;
+                        background:#339AF0;
+                        color:white;
+                        opacity: 0.5;
+                    }
+                }
+            }
+            .toggle-am-pm{
+                font-size: 0.8rem;
+                cursor: pointer;
+                border-radius: 5px;
+                font-weight: bold;
+                background:#339AF0;
+                color:white;
+                opacity: 0.5;
+                height: fit-content;
+                padding: 5px;
+            }
+
+            
+        }
+    }
+
+    .footer{
+        text-align: center;
+        font-size: 1rem;
+        border-radius: 5px;
+        div{
+            margin: 11px;
+            i{
+                color: #339AF0;
+            }
+        }
+        &:hover{
+            div{
+                background-color: #339AF0;
+                opacity: 0.5;
+                border-radius: 5px;
+                i{
+                    color: white;
+                }
+            }
+            cursor: pointer;
+        }
+       
+    }
+
+    .previous-dozen-years,
+    .next-dozen-years,
+    .previous-year,
+    .previous-month,
+    .previous-hour,
+    .previous-minute,
+    .next-year,
+    .next-month,
+    .next-minute,
+    .next-hour{
+        i{
+            font-size: 0.9rem;
+            margin: 0 8px;
+            &:hover{
+                cursor: pointer;
+                font-size: 1rem;
+            }
+        }
+    }
+}
