@@ -1,3 +1,5 @@
+@import "variables";
+
 .datetimepicker-container {
     width: 277px;
     z-index: 2000;
@@ -12,11 +14,11 @@
     .header{
         width: inherit;
         text-align: center;
-        background:#339AF0;
-        color: white;
+        background: $date-n-time-picker-primary-color;
+        color: $date-n-time-picker-primary-text-color;
         padding-top: 2%;
         padding-bottom: 2%;
-        border-bottom: 1px solid #339AF0;
+        border-bottom: 1px solid $date-n-time-picker-primary-color;
         border-radius: 0px 0px 2px 2px;
         height: 26px;
         font-size: 1rem;
@@ -41,16 +43,16 @@
             &:hover{
                 cursor: pointer;
                 &:not(.selected){
-                    background-color: #339AF0;
+                    background-color: $date-n-time-picker-primary-color;
                     opacity: 0.5;
-                    color: white;
+                    color: $date-n-time-picker-primary-text-color;
                     font-weight: bold;
                     border-radius: 5px;
                 }
             }
             &.selected{
-                background: #339AF0;
-                color: white;
+                background: $date-n-time-picker-primary-color;
+                color: $date-n-time-picker-primary-text-color;
                 border-radius: 5px;
                 font-weight: bold;
             }
@@ -85,8 +87,8 @@
                     cursor: pointer;
                     border-radius: 5px;
                     font-weight: bold;
-                    background:#339AF0;
-                    color:white;
+                    background: $date-n-time-picker-primary-color;
+                    color:$date-n-time-picker-primary-text-color;
                     opacity: 0.5;
                 }
             }
@@ -119,8 +121,8 @@
                         cursor: pointer;
                         border-radius: 5px;
                         font-weight: bold;
-                        background:#339AF0;
-                        color:white;
+                        background: $date-n-time-picker-primary-color;
+                        color:$date-n-time-picker-primary-text-color;
                         opacity: 0.5;
                     }
                 }
@@ -130,8 +132,8 @@
                 cursor: pointer;
                 border-radius: 5px;
                 font-weight: bold;
-                background:#339AF0;
-                color:white;
+                background: $date-n-time-picker-primary-color;
+                color: $date-n-time-picker-primary-text-color;
                 opacity: 0.5;
                 height: fit-content;
                 padding: 5px;
@@ -148,16 +150,16 @@
         div{
             margin: 11px;
             i{
-                color: #339AF0;
+                color: $date-n-time-picker-primary-color;
             }
         }
         &:hover{
             div{
-                background-color: #339AF0;
+                background-color: $date-n-time-picker-primary-color;
                 opacity: 0.5;
                 border-radius: 5px;
                 i{
-                    color: white;
+                    color: $date-n-time-picker-primary-text-color;
                 }
             }
             cursor: pointer;
