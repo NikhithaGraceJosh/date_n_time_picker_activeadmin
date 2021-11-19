@@ -9,7 +9,8 @@
     border: 1px solid grey;
     justify-content: center;
     border-radius: 5px;
-    background: white;
+    background: $date-n-time-picker-container-color;
+    color: $date-n-time-picker-container-text-color;
 
     .header{
         width: inherit;
@@ -35,7 +36,8 @@
     .body.datepicker{
         table thead{
             th{
-                background: white;
+                background: $date-n-time-picker-container-color;
+                color: $date-n-time-picker-container-text-color;
             }
         }
         td:not(:empty){

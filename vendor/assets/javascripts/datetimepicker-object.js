@@ -1,4 +1,6 @@
 //= require datetimepicker-constants
+var toggleTimeIcon = toggleTimeIcon || '<i class="far fa-clock"></i>'
+var toggleCalendarIcon = toggleCalendarIcon || '<i class="far fa-calendar-alt"></i>'
 
 function myDate() {
     this.date = null;
@@ -29,7 +31,7 @@ function Datetimepicker(element) {
         if (!(this.datetimepicker_options["only_datepicker"])) {
             html += `<div class="footer">
                             <div class="toggle time">
-                                <i class="far fa-clock"></i>
+                                ${toggleTimeIcon}
                             </div>
                         </div>
                     </div>`
@@ -263,7 +265,11 @@ function Datetimepicker(element) {
     }
 
     this.toggleFooterIcon = function () {
-        $('.datetimepicker-container .footer .toggle').children().toggleClass("fa-calendar-alt fa-clock")
+        if($('.datetimepicker-container .footer .toggle').hasClass('time')){
+            $('.datetimepicker-container .footer .toggle').children().first().replaceWith(toggleCalendarIcon)
+        } else {
+            $('.datetimepicker-container .footer .toggle').children().first().replaceWith(toggleTimeIcon)
+        }
         $('.datetimepicker-container .footer .toggle').toggleClass("time date")
     }
 
