@@ -1,5 +1,17 @@
 # DateNTimePickerActiveadmin
 A datetimepicker, tailored for ActiveAdmin.
+<table>
+    <tr>
+        <td>
+            <img src="https://user-images.githubusercontent.com/64245213/142716241-cb7815bb-b2c7-4110-9d0e-e076acf4ff5e.png">
+        </td>
+        <td>
+            <img src="https://user-images.githubusercontent.com/64245213/142716879-d8b9fdaa-c85e-4b2a-9789-ed0e28688d84.png">
+        </td>
+    </tr>
+</table>
+
+<br/><br/>
 
 ## Installation
 
@@ -16,6 +28,8 @@ And then execute:
 Or install it yourself as:
 
     $ gem install date_n_time_picker_activeadmin
+
+<br/><br/>
 
 ## Usage
 
@@ -37,6 +51,8 @@ In active_admin.js, add the line,
 ```js
 //= require date_n_time_picker_activeadmin
 ```
+
+<br/><br/>
 
 ## Customisations
 
@@ -87,11 +103,80 @@ Hides the timepicker.
 f.input :column_name, as: :datetimepicker, datetimepicker_options: { only_datepicker: true }
 ```
 
+<br/><br/>
+
+## Customize CSS
+To change the major colors, you can use the following SASS variables:
+
+|Variable Name                              |Default Value  | Description   |
+|:------------------------------------------|:--------------|:--------------|
+|$date-n-time-picker-primary-color          |![#339AF0](https://via.placeholder.com/15/339AF0/000000?text=+) #339AF0    |Header and Hover background color  |
+|$date-n-time-picker-primary-text-color     |![#FFF](https://via.placeholder.com/15/FFF/000000?text=+) #FFF    |Header and Hover text color        |
+|$date-n-time-picker-container-color        |![#FFF](https://via.placeholder.com/15/FFF/000000?text=+) #FFF    |DatetimePicker Container Background color  |
+|$date-n-time-picker-container-text-color   |![#323537](https://via.placeholder.com/15/323537/000000?text=+) #323537    |Datetimepicker container Text Color    |
+
+**Please make sure to define these variables before importing the datetimepicker's stylesheet.**
+
+For Example,
+
+> // active_admin.scss
+>
+> ```
+> $date-n-time-picker-primary-color: red; //make sure this comes first, before importing datetimepicker's stylesheet
+> @import "date_n_time_picker_activeadmin"
+> ```
+
+*Note: All the CSS classes used for the datetimepicker elements can be overridden in your stylesheet. To know more, check the default stylesheet here.*
+
+<br/><br/>
+
+## Customise the Toggle Icon
+To customize the toggle icon, create a .js file to store the following variables and require it before requiring datetimepicker's javascript file:
+
+|Variable Name                              |Default Value  | Description   |
+|:------------------------------------------|:--------------|:--------------|
+|toggleTimeIcon          |```<i class="far fa-clock"></i>``` |Stores the element to be displayed as the toggle time icon  |
+|toggleCalendarIcon    |```<i class="far fa-calendar-alt"></i>``` |Stores the element to be displayed as the toggle time icon       |
+
+
+<table>
+    <tr>
+        <td>
+            <img src="https://user-images.githubusercontent.com/64245213/142717172-5e82f3f6-6de4-408a-8ac2-91db9486e8f7.png">
+        </td>
+        <td>
+            <img src="https://user-images.githubusercontent.com/64245213/142717176-32fa9c72-4fa4-4677-9127-e251c57b3014.png">
+        </td>
+    </tr>
+</table>
+
+For Example,
+
+> // var.js
+> 
+> ```
+> var toggleTimeIcon = '<div>TIME</div'
+> var toggleCalendarIcon = '<div>CALENDAR</div>'
+> ```
+
+> // active_admin.js
+>
+> ```
+> //= require var.js //make sure this comes first, before requiring datetimepicker's javascript file
+> //= require date_n_time_picker_activeadmin.js
+> ```
+
+**Please make sure to define these variables before requiring the datetimepicker's javascript file.**
+
+<br/><br/>
+
 ## Testing
 To run tests,
 ```ruby
 RAILS_ENV=test rspec spec
 ```
+
+<br/><br/>
 
 ## Patches/Pull Requests
 Bug reports and pull requests are welcome on GitHub at https://github.com/NikhithaGraceJosh/date_n_time_picker_activeadmin. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/NikhithaGraceJosh/date_n_time_picker_activeadmin/blob/master/CODE_OF_CONDUCT.md).
@@ -102,8 +187,12 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/Nikhit
 4. Push the changes to the `my-new-proposed-feature` branch (git push origin my-new-proposed-feature)
 5. Create new Pull Request
 
+<br/><br/>
+
 ## Code of Conduct
 Everyone interacting in the DateNTimePickerActiveadmin project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/NikhithaGraceJosh/date_n_time_picker_activeadmin/blob/master/CODE_OF_CONDUCT.md).
+
+<br/><br/>
 
 ## Copyright
 Copyright (c) 2021 NikhithaGraceJosh. See [LICSENCE](https://github.com/NikhithaGraceJosh/date_n_time_picker_activeadmin/blob/master/LICENSE) for more details.
