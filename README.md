@@ -125,8 +125,9 @@ For Example,
 > $date-n-time-picker-primary-color: red; //make sure this comes first, before importing datetimepicker's stylesheet
 > @import "date_n_time_picker_activeadmin"
 > ```
+<br/>
 
-*Note: All the CSS classes used for the datetimepicker elements can be overridden in your stylesheet. To know more, check the default stylesheet here.*
+_Note: All the CSS classes used for the datetimepicker elements can be overridden in your stylesheet. To know more, check the default stylesheet [here](https://github.com/NikhithaGraceJosh/date_n_time_picker_activeadmin/blob/master/vendor/assets/stylesheets/datetimepicker.scss)._
 
 <br/><br/>
 
