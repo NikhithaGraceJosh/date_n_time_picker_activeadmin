@@ -3,14 +3,13 @@ A datetimepicker, tailored for ActiveAdmin.
 <table>
     <tr>
         <td>
-            <img src="https://user-images.githubusercontent.com/64245213/142716241-cb7815bb-b2c7-4110-9d0e-e076acf4ff5e.png">
+            <img src="https://user-images.githubusercontent.com/64245213/142817365-32fe4cd8-2314-4139-9fdc-4a0dd6c3f266.png">
         </td>
         <td>
-            <img src="https://user-images.githubusercontent.com/64245213/142716879-d8b9fdaa-c85e-4b2a-9789-ed0e28688d84.png">
+            <img src="https://user-images.githubusercontent.com/64245213/142817454-b2f3a0ef-6ac8-48ef-90a7-22ece0220372.png">
         </td>
     </tr>
 </table>
-
 <br/><br/>
 
 ## Installation
@@ -72,7 +71,7 @@ Disables all dates after the specified minimum date.
 f.input :column_name, as: :datetimepicker, datetimepicker_options: { format: "%mm-%dd-%yyyy %HH:%MM:%SS %P"}
 ```
 ###### Example
-<sub>Consider selected date is 09 August 2021, 05:07:08 pm</sub>
+<sub>Consider selected date is ```09 August 2021, 05:07:08 pm```, then format would be ```%dd %B %yyyy, %hh:%MM:%SS %p```</sub>
 
 | <sub> Format Options </sub> | <sub> Meaning  </sub>                            | <sub> Example </sub>  |
 | ---------------------------:|:------------------------------------------------:|:---------------------:|
@@ -143,10 +142,10 @@ To customize the toggle icon, create a .js file to store the following variables
 <table>
     <tr>
         <td>
-            <img src="https://user-images.githubusercontent.com/64245213/142717172-5e82f3f6-6de4-408a-8ac2-91db9486e8f7.png">
+            <img src="https://user-images.githubusercontent.com/64245213/142817888-c7163a42-a203-4d82-a960-3064006f0a19.png">
         </td>
         <td>
-            <img src="https://user-images.githubusercontent.com/64245213/142717176-32fa9c72-4fa4-4677-9127-e251c57b3014.png">
+            <img src="https://user-images.githubusercontent.com/64245213/142817898-7d17427f-4637-46ef-bfee-d2e18437401e.png">
         </td>
     </tr>
 </table>
