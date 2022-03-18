@@ -1,5 +1,5 @@
 # DateNTimePickerActiveadmin
-A datetimepicker, tailored for ActiveAdmin.
+A datetimepicker, tailored for [ActiveAdmin](https://github.com/activeadmin/activeadmin).
 <table>
     <tr>
         <td>
