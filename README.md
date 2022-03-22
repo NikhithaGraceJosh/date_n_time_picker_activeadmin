@@ -89,7 +89,7 @@ f.input :column_name, as: :datetimepicker, datetimepicker_options: { format: "%m
 | <sub> '%MM' </sub>          | <sub> minutes (2 digits) </sub>                  | <sub> 07 </sub>       |
 | <sub> '%S'  </sub>          | <sub> seconds (single digit) </sub>              | <sub> 8 </sub>        |
 | <sub> '%SS' </sub>          | <sub> seconds (2 digits) </sub>                  | <sub> 08 </sub>       |
-| <sub> '%P' </sub>           | <sub> time period in lower case </sub>           | <sub> AM/PM </sub>    |
+| <sub> '%P' </sub>           | <sub> time period in upper case </sub>           | <sub> AM/PM </sub>    |
 | <sub> '%p' </sub>           | <sub> time period in lower case </sub>           | <sub> am/pm </sub>    |
 | <sub> '%a' </sub>           | <sub> Day in words (short) </sub>                | <sub> Thu </sub>      |
 | <sub> '%A' </sub>           | <sub> Day in words </sub>                        | <sub> Thursday </sub> |
