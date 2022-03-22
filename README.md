@@ -66,7 +66,7 @@ Disables all dates after the specified minimum date.
 f.input :column_name, as: :datetimepicker, datetimepicker_options: { max_date: Date.today }
 ```
 ##### Specify a date format
-Disables all dates after the specified minimum date.
+Displays selected datetime in the specified format.
 ```ruby
 f.input :column_name, as: :datetimepicker, datetimepicker_options: { format: "%mm-%dd-%yyyy %HH:%MM:%SS %P"}
 ```
