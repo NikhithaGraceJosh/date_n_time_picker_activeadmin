@@ -195,5 +195,5 @@ Everyone interacting in the DateNTimePickerActiveadmin project's codebases, issu
 <br/><br/>
 
 ## Copyright
-Copyright (c) 2021 NikhithaGraceJosh. See [LICSENCE](https://github.com/NikhithaGraceJosh/date_n_time_picker_activeadmin/blob/master/LICENSE) for more details.
+Copyright (c) 2021 Nikhitha Grace Josh. See [LICSENCE](https://github.com/NikhithaGraceJosh/date_n_time_picker_activeadmin/blob/master/LICENSE) for more details.
 
