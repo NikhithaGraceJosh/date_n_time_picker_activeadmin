@@ -21,5 +21,5 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = ">= 3.1"
 
   spec.add_dependency 'font-awesome-sass', '~> 5.15', '>= 5.15.1'
-  spec.add_dependency 'activeadmin', '>= 3.2.5'
+  spec.add_dependency 'activeadmin', '~> 3.2', '>= 3.2.5'
 end

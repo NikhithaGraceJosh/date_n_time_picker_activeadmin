@@ -32,7 +32,7 @@ gem 'activeadmin'
 # Plus integrations with:
 gem 'devise'
 
-gem 'date_n_time_picker_activeadmin', :path => '../..'
+gem 'date_n_time_picker_activeadmin', :git => 'https://github.com/NikhithaGraceJosh/date_n_time_picker_activeadmin', :branch => "master"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
