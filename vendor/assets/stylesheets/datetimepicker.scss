@@ -13,15 +13,14 @@
     color: $date-n-time-picker-container-text-color;
 
     .header{
-        width: inherit;
         text-align: center;
         background: $date-n-time-picker-primary-color;
         color: $date-n-time-picker-primary-text-color;
         padding-top: 2%;
         padding-bottom: 2%;
         border-bottom: 1px solid $date-n-time-picker-primary-color;
-        border-radius: 0px 0px 2px 2px;
-        height: 26px;
+        border-radius: 5px 5px 0px 0px;
+        height: 36px;
         font-size: 1rem;
         .select-year,
         .select-month{

@@ -18,6 +18,8 @@ Gem::Specification.new do |spec|
   spec.files                  = Dir['{lib,vendor}/**/*'] + ['LICENSE', 'README.md', 'CODE_OF_CONDUCT.md']
   spec.require_paths          = ['lib']
 
+  spec.required_ruby_version = ">= 3.1"
+
   spec.add_dependency 'font-awesome-sass', '~> 5.15', '>= 5.15.1'
-  spec.add_dependency 'activeadmin', '~> 2.9', '>= 2.9.0'
+  spec.add_dependency 'activeadmin', '>= 3.2.5'
 end
