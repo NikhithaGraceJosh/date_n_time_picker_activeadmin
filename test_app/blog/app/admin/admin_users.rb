@@ -19,7 +19,7 @@ ActiveAdmin.register AdminUser do
   form do |f|
     f.inputs do
       f.input :email
-      f.input :date_of_birth, as: :datetimepicker, datetimepicker_options: { format: "%mm-%dd-%yyyy %HH:%MM:%SS"}
+      f.input :date_of_birth, as: :datetimepicker, datetimepicker_options: { format: "%mm-%dd-%yyyy %HH:%MM:%SS" }
       f.input :password
       f.input :password_confirmation
     end
