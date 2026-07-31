@@ -2,6 +2,15 @@
 var toggleTimeIcon = toggleTimeIcon || '<i class="far fa-clock"></i>'
 var toggleCalendarIcon = toggleCalendarIcon || '<i class="far fa-calendar-alt"></i>'
 
+function delegate(root, eventType, selector, handler) {
+    root.addEventListener(eventType, function (e) {
+        let target = e.target.closest(selector)
+        if (target && root.contains(target)) {
+            handler(e, target)
+        }
+    })
+}
+
 function myDate() {
     this.date = null;
     this.month = null;
@@ -36,8 +45,8 @@ function Datetimepicker(element) {
                         </div>
                     </div>`
         }
-        $(this.dateInputElement).after(html)
-        this.widget = $(this.dateInputElement).next()
+        this.dateInputElement.insertAdjacentHTML('afterend', html)
+        this.widget = this.dateInputElement.nextElementSibling
 
         bindWidgetEvents.bind(this)()
         this.displayCalendar(this.viewingDate.month, this.viewingDate.year)
@@ -109,8 +118,9 @@ function Datetimepicker(element) {
                             </span>
                         </span>
                     </div>`
-        $('.datetimepicker-container .header').attr('class', 'header datepicker')
-        $('.datetimepicker-container .header.datepicker').html(html)
+        let header = this.widget.querySelector('.header')
+        header.className = 'header datepicker'
+        header.innerHTML = html
     }
 
     this.fillBodyCalendar = function (month, year, day, total_days, min_date, max_date) {
@@ -118,7 +128,7 @@ function Datetimepicker(element) {
         let html = `<table>
                         <thead>
                             <tr>`
-        $.each(DAYS, function (index, value) {
+        DAYS.forEach(function (value) {
             html += `<th> ${value} </th>`
         })
         html += `   </tr>
@@ -170,8 +180,9 @@ function Datetimepicker(element) {
             i++
         }
         html += `</tr></tbody></table>`
-        $('.datetimepicker-container .body').attr('class', 'body datepicker')
-        $('.datetimepicker-container .body.datepicker').html(html)
+        let body = this.widget.querySelector('.body')
+        body.className = 'body datepicker'
+        body.innerHTML = html
     }
 
     this.displayMonthPicker = function () {
@@ -180,18 +191,18 @@ function Datetimepicker(element) {
     }
 
     this.fillHeaderMonthPicker = function () {
-        $('.datetimepicker-container .header').attr('class', 'header monthpicker')
-        $('.datetimepicker-container .header.monthpicker').html(`<span> Select Month</span>`)
+        this.widget.querySelector('.header').className = 'header monthpicker'
+        this.widget.querySelector('.header.monthpicker').innerHTML = `<span> Select Month</span>`
     }
 
     this.fillBodyMonthPicker = function () {
-        $('.datetimepicker-container .body').attr('class', 'body monthpicker')
+        this.widget.querySelector('.body').className = 'body monthpicker'
         let html = `<div class="month-container">`
-        $.map(MONTHS, function (value, index) {
+        MONTHS.forEach(function (value, index) {
             html += `<div class="${index}">${value}</div>`
         })
         html += `</div> `
-        $('.datetimepicker-container .body.monthpicker').html(html);
+        this.widget.querySelector('.body.monthpicker').innerHTML = html
     }
 
     this.displayYearPicker = function () {
@@ -202,7 +213,7 @@ function Datetimepicker(element) {
     }
 
     this.displayNextDozenYears = function () {
-        let current_end_year = $('.datetimepicker-container .header.yearpicker .current-dozen .end-year').text()
+        let current_end_year = this.widget.querySelector('.header.yearpicker .current-dozen .end-year').textContent
         let next_start_year = parseInt(current_end_year) + 1
         let next_end_year = parseInt(current_end_year) + 12
         this.fillHeaderYearPicker(next_start_year, next_end_year)
@@ -210,7 +221,7 @@ function Datetimepicker(element) {
     }
 
     this.displayPreviousDozenYears = function () {
-        let current_start_year = $('.datetimepicker-container .header.yearpicker .current-dozen .start-year').text()
+        let current_start_year = this.widget.querySelector('.header.yearpicker .current-dozen .start-year').textContent
         let previous_start_year = parseInt(current_start_year) - 12
         let previous_end_year = parseInt(current_start_year) - 1
         this.fillHeaderYearPicker(previous_start_year, previous_end_year)
@@ -218,7 +229,7 @@ function Datetimepicker(element) {
     }
 
     this.fillHeaderYearPicker = function (start_year, end_year) {
-        $('.datetimepicker-container .header').attr('class', 'header yearpicker')
+        this.widget.querySelector('.header').className = 'header yearpicker'
         let html = `<span class="previous-dozen-years">
                     <i class="fa fa-chevron-left"></i>
                 </span >
@@ -228,11 +239,11 @@ function Datetimepicker(element) {
                 <span class="next-dozen-years">
                     <i class="fa fa-chevron-right"></i>
                 </span>`
-        $('.datetimepicker-container .header.yearpicker').html(html)
+        this.widget.querySelector('.header.yearpicker').innerHTML = html
     }
 
     this.fillBodyYearPicker = function (start_year, end_year) {
-        $('.datetimepicker-container .body').attr('class', 'body yearpicker')
+        this.widget.querySelector('.body').className = 'body yearpicker'
         let html = `<div class="year-container"> `
 
         for (i = start_year; i <= end_year; i++) {
@@ -244,11 +255,11 @@ function Datetimepicker(element) {
             }
         }
         html += `</div>`
-        $('.datetimepicker-container .body.yearpicker').html(html);
+        this.widget.querySelector('.body.yearpicker').innerHTML = html
     }
 
     this.toggleDateTimePickers = function () {
-        if ($('.datetimepicker-container .footer .toggle').hasClass("time")) {
+        if (this.widget.querySelector('.footer .toggle').classList.contains('time')) {
             //display timepicker
             this.displayTimePicker()
 
@@ -265,12 +276,14 @@ function Datetimepicker(element) {
     }
 
     this.toggleFooterIcon = function () {
-        if($('.datetimepicker-container .footer .toggle').hasClass('time')){
-            $('.datetimepicker-container .footer .toggle').children().first().replaceWith(toggleCalendarIcon)
+        let toggle = this.widget.querySelector('.footer .toggle')
+        if (toggle.classList.contains('time')) {
+            toggle.firstElementChild.outerHTML = toggleCalendarIcon
         } else {
-            $('.datetimepicker-container .footer .toggle').children().first().replaceWith(toggleTimeIcon)
+            toggle.firstElementChild.outerHTML = toggleTimeIcon
         }
-        $('.datetimepicker-container .footer .toggle').toggleClass("time date")
+        toggle.classList.toggle('time')
+        toggle.classList.toggle('date')
     }
 
     this.displayTimePicker = function () {
@@ -279,8 +292,8 @@ function Datetimepicker(element) {
     }
 
     this.fillHeaderTimePicker = function () {
-        $('.datetimepicker-container .header').attr('class', 'header timepicker')
-        $('.datetimepicker-container .header.timepicker').html(`<span> Select Time</span> `)
+        this.widget.querySelector('.header').className = 'header timepicker'
+        this.widget.querySelector('.header.timepicker').innerHTML = `<span> Select Time</span> `
     }
 
     this.fillBodyTimePicker = function () {
@@ -302,8 +315,8 @@ function Datetimepicker(element) {
             ${this.finalTime.period}
         </div
                 </div> `
-        $('.datetimepicker-container .body').attr('class', 'body timepicker')
-        $('.datetimepicker-container .body.timepicker').html(html);
+        this.widget.querySelector('.body').className = 'body timepicker'
+        this.widget.querySelector('.body.timepicker').innerHTML = html
     }
 
     this.displayHourPicker = function () {
@@ -312,18 +325,18 @@ function Datetimepicker(element) {
     }
 
     this.fillHeaderHourPicker = function () {
-        $('.datetimepicker-container .header').attr('class', 'header hourpicker')
-        $('.datetimepicker-container .header.hourpicker').html(`<span> Select Hour</span>`)
+        this.widget.querySelector('.header').className = 'header hourpicker'
+        this.widget.querySelector('.header.hourpicker').innerHTML = `<span> Select Hour</span>`
     }
 
     this.fillBodyHourPicker = function () {
-        $('.datetimepicker-container .body').attr('class', 'body hourpicker')
+        this.widget.querySelector('.body').className = 'body hourpicker'
         let html = `<div class="hour-container">`
         for (i = 1; i <= 12; i++) {
             html += `<div>${i}</div>`
         }
         html += `</div>`
-        $('.datetimepicker-container .body.hourpicker').html(html);
+        this.widget.querySelector('.body.hourpicker').innerHTML = html
     }
 
     this.displayMinutePicker = function () {
@@ -332,18 +345,18 @@ function Datetimepicker(element) {
     }
 
     this.fillHeaderMinutePicker = function () {
-        $('.datetimepicker-container .header').attr('class', 'header minutepicker')
-        $('.datetimepicker-container .header.hourpicker').html(`<span> Select Minute</span> `)
+        this.widget.querySelector('.header').className = 'header minutepicker'
+        this.widget.querySelector('.header.hourpicker').innerHTML = `<span> Select Minute</span> `
     }
 
     this.fillBodyMinutePicker = function () {
-        $('.datetimepicker-container .body').attr('class', 'body minutepicker')
+        this.widget.querySelector('.body').className = 'body minutepicker'
         let html = `<div class="minute-container"> `
         for (i = 0; i <= 59; i += 5) {
             html += `<div>${i}</div> `
         }
         html += `</div>`
-        $('.datetimepicker-container .body.minutepicker').html(html);
+        this.widget.querySelector('.body.minutepicker').innerHTML = html
     }
 }
 
@@ -421,24 +434,24 @@ function formatDateTime(jsDateObject, dateObject, timeObject, format) {
 }
 
 function bindWidgetEvents() {
-    this.widget.on('click', '.header.datepicker .select-month', function () {
+    delegate(this.widget, 'click', '.header.datepicker .select-month', function (e, target) {
         //display month picker
         this.displayMonthPicker();
-        $('.datetimepicker-container .footer').hide()
+        this.widget.querySelector('.footer').style.display = 'none'
     }.bind(this))
-    this.widget.on('click', '.body.monthpicker .month-container div', function (e) {
-        this.viewingDate.month = parseInt($(e.currentTarget)[0].className)
+    delegate(this.widget, 'click', '.body.monthpicker .month-container div', function (e, target) {
+        this.viewingDate.month = parseInt(target.className)
         // display calendar
         this.displayCalendar(this.viewingDate.month, this.viewingDate.year)
         //show footer
-        $('.datetimepicker-container .footer').show()
+        this.widget.querySelector('.footer').style.display = ''
     }.bind(this))
-    this.widget.on('click', '.header.datepicker .previous-month', function () {
-        let current_month = $('.datetimepicker-container .header.datepicker .select-month span')[0].className
+    delegate(this.widget, 'click', '.header.datepicker .previous-month', function (e, target) {
+        let current_month = this.widget.querySelector('.header.datepicker .select-month span').className
         // get the previous value of current month
         if (current_month == 0) {
             this.viewingDate.month = 11
-            this.viewingDate.year = parseInt($('.select-year').text()) - 1
+            this.viewingDate.year = parseInt(this.widget.querySelector('.select-year').textContent) - 1
         }
         else {
             this.viewingDate.month = current_month - 1
@@ -446,12 +459,12 @@ function bindWidgetEvents() {
         // display calendar
         this.displayCalendar(this.viewingDate.month, this.viewingDate.year)
     }.bind(this))
-    this.widget.on('click', '.header.datepicker .next-month', function () {
-        let current_month = $('.datetimepicker-container .header.datepicker .select-month span')[0].className
+    delegate(this.widget, 'click', '.header.datepicker .next-month', function (e, target) {
+        let current_month = this.widget.querySelector('.header.datepicker .select-month span').className
         // get the next value of current month
         if (current_month == 11) {
             this.viewingDate.month = 0
-            this.viewingDate.year = parseInt($('.select-year').text()) + 1
+            this.viewingDate.year = parseInt(this.widget.querySelector('.select-year').textContent) + 1
         } else {
             this.viewingDate.month = parseInt(current_month) + 1
         }
@@ -459,142 +472,144 @@ function bindWidgetEvents() {
         // display calendar
         this.displayCalendar(this.viewingDate.month, this.viewingDate.year)
     }.bind(this))
-    this.widget.on('click', '.header.datepicker .next-year', function () {
-        let year = $('.datetimepicker-container .header.datepicker .select-year').text()
+    delegate(this.widget, 'click', '.header.datepicker .next-year', function (e, target) {
+        let year = this.widget.querySelector('.header.datepicker .select-year').textContent
         this.viewingDate.year = parseInt(year) + 1
 
         // display calendar
         this.displayCalendar(this.viewingDate.month, this.viewingDate.year)
     }.bind(this))
-    this.widget.on('click', '.header.datepicker .previous-year', function () {
-        let year = $('.datetimepicker-container .header.datepicker .select-year').text()
+    delegate(this.widget, 'click', '.header.datepicker .previous-year', function (e, target) {
+        let year = this.widget.querySelector('.header.datepicker .select-year').textContent
         this.viewingDate.year = parseInt(year) - 1
 
         // display calendar
         this.displayCalendar(this.viewingDate.month, this.viewingDate.year)
     }.bind(this))
-    this.widget.on('click', '.header.datepicker .select-year', function () {
+    delegate(this.widget, 'click', '.header.datepicker .select-year', function (e, target) {
 
         // display year picker
         this.displayYearPicker()
 
         //hide footer
-        $('.datetimepicker-container .footer').hide()
+        this.widget.querySelector('.footer').style.display = 'none'
     }.bind(this))
-    this.widget.on('click', '.body.yearpicker .year-container div', function (e) {
+    delegate(this.widget, 'click', '.body.yearpicker .year-container div', function (e, target) {
         //selected year
-        this.viewingDate.year = $(e.currentTarget).text()
+        this.viewingDate.year = target.textContent
 
         //display calendar
         this.displayCalendar(this.viewingDate.month, this.viewingDate.year)
 
         //show footer
-        $('.datetimepicker-container .footer').show()
+        this.widget.querySelector('.footer').style.display = ''
     }.bind(this))
-    this.widget.on('click', '.header.yearpicker .previous-dozen-years', function () {
+    delegate(this.widget, 'click', '.header.yearpicker .previous-dozen-years', function (e, target) {
         this.displayPreviousDozenYears()
     }.bind(this))
-    this.widget.on('click', '.header.yearpicker .next-dozen-years', function () {
+    delegate(this.widget, 'click', '.header.yearpicker .next-dozen-years', function (e, target) {
         this.displayNextDozenYears()
     }.bind(this))
-    this.widget.on('click', '.footer .toggle', function () {
+    delegate(this.widget, 'click', '.footer .toggle', function (e, target) {
         this.toggleDateTimePickers()
     }.bind(this))
-    this.widget.on('click', '.body.timepicker .time-container .hour', function (e) {
-        this.finalTime.hour = $(e.currentTarget).val()
+    delegate(this.widget, 'click', '.body.timepicker .time-container .hour', function (e, target) {
+        this.finalTime.hour = target.value
     }.bind(this))
-    this.widget.on('click', '.body.timepicker .time-container .minute', function (e) {
-        this.finalTime.minute = $(e.currentTarget).val()
+    delegate(this.widget, 'click', '.body.timepicker .time-container .minute', function (e, target) {
+        this.finalTime.minute = target.value
     }.bind(this))
-    this.widget.on('click', '.body.timepicker .time-container .hour-container .previous-hour', function () {
+    delegate(this.widget, 'click', '.body.timepicker .time-container .hour-container .previous-hour', function (e, target) {
         if (this.finalTime.hour == 0) {
             this.finalTime.hour = 12
         } else {
             this.finalTime.hour = this.finalTime.hour - 1
         }
-        $('.datetimepicker-container .body.timepicker .time-container .hour').text(this.finalTime.hour)
+        this.widget.querySelector('.body.timepicker .time-container .hour').textContent = this.finalTime.hour
     }.bind(this))
-    this.widget.on('click', '.body.timepicker .time-container .hour-container .next-hour', function () {
+    delegate(this.widget, 'click', '.body.timepicker .time-container .hour-container .next-hour', function (e, target) {
         if (this.finalTime.hour == 12) {
             this.finalTime.hour = 0
         } else {
             this.finalTime.hour = parseInt(this.finalTime.hour) + 1
         }
-        $('.datetimepicker-container .body.timepicker .time-container .hour').text(this.finalTime.hour)
+        this.widget.querySelector('.body.timepicker .time-container .hour').textContent = this.finalTime.hour
     }.bind(this))
-    this.widget.on('click', '.body.timepicker .time-container .minute-container .previous-minute', function () {
+    delegate(this.widget, 'click', '.body.timepicker .time-container .minute-container .previous-minute', function (e, target) {
         if (this.finalTime.minute == 0) {
             this.finalTime.minute = 60
         } else {
             this.finalTime.minute = this.finalTime.minute - 1
         }
-        $('.datetimepicker-container .body.timepicker .time-container .minute').text(this.finalTime.minute)
+        this.widget.querySelector('.body.timepicker .time-container .minute').textContent = this.finalTime.minute
     }.bind(this))
-    this.widget.on('click', '.body.timepicker .time-container .minute-container .next-minute', function () {
+    delegate(this.widget, 'click', '.body.timepicker .time-container .minute-container .next-minute', function (e, target) {
         if (this.finalTime.minute == 60) {
             this.finalTime.minute = 0
         } else {
             this.finalTime.minute = parseInt(this.finalTime.minute) + 1
         }
-        $('.datetimepicker-container .body.timepicker .time-container .minute').text(this.finalTime.minute)
+        this.widget.querySelector('.body.timepicker .time-container .minute').textContent = this.finalTime.minute
     }.bind(this))
-    this.widget.on('click', '.body.timepicker .time-container .hour', function () {
+    delegate(this.widget, 'click', '.body.timepicker .time-container .hour', function (e, target) {
         this.displayHourPicker()
-        $('.datetimepicker-container .footer').hide()
+        this.widget.querySelector('.footer').style.display = 'none'
     }.bind(this))
-    this.widget.on('click', '.body.timepicker .time-container .minute', function () {
+    delegate(this.widget, 'click', '.body.timepicker .time-container .minute', function (e, target) {
         this.displayMinutePicker()
-        $('.datetimepicker-container .footer').hide()
+        this.widget.querySelector('.footer').style.display = 'none'
     }.bind(this))
-    this.widget.on('click', '.body.hourpicker .hour-container div', function (e) {
+    delegate(this.widget, 'click', '.body.hourpicker .hour-container div', function (e, target) {
         //save the selected month value
-        this.finalTime.hour = $(e.currentTarget).text()
+        this.finalTime.hour = target.textContent
         this.updateDateObject()
 
         // display calendar
         this.displayTimePicker()
 
         //show footer
-        $('.datetimepicker-container .footer').show()
+        this.widget.querySelector('.footer').style.display = ''
     }.bind(this))
-    this.widget.on('click', '.body.minutepicker .minute-container div', function (e) {
+    delegate(this.widget, 'click', '.body.minutepicker .minute-container div', function (e, target) {
         //save the selected month value
-        this.finalTime.minute = $(e.currentTarget).text()
+        this.finalTime.minute = target.textContent
         this.updateDateObject()
 
         // display calendar
         this.displayTimePicker()
 
         //show footer
-        $('.datetimepicker-container .footer').show()
+        this.widget.querySelector('.footer').style.display = ''
     }.bind(this))
-    this.widget.on('click', '.body.timepicker .toggle-am-pm', function () {
+    delegate(this.widget, 'click', '.body.timepicker .toggle-am-pm', function (e, target) {
         //save the selected month value
         if (this.finalTime.period == "AM") {
             this.finalTime.period = "PM"
-            $('.datetimepicker-container .body.timepicker .toggle-am-pm').text("PM")
+            this.widget.querySelector('.body.timepicker .toggle-am-pm').textContent = "PM"
         } else {
             this.finalTime.period = "AM"
-            $('.datetimepicker-container .body.timepicker .toggle-am-pm').text("AM")
+            this.widget.querySelector('.body.timepicker .toggle-am-pm').textContent = "AM"
         }
         this.updateDateObject()
         // display calendar
         // this.displayTimePicker()
 
         //show footer
-        // $('.datetimepicker-container .footer').show()
+        // this.widget.querySelector('.footer').style.display = ''
     }.bind(this))
-    this.widget.on('click', '.body.datepicker table td:not(.disabled)', function (e) {
+    delegate(this.widget, 'click', '.body.datepicker table td:not(.disabled)', function (e, target) {
 
         // add and remove class (for the design)
-        $('.datetimepicker-container .body.datepicker table td').removeClass('selected')
-        $(e.currentTarget).addClass('selected')
+        this.widget.querySelectorAll('.body.datepicker table td').forEach(function (td) {
+            td.classList.remove('selected')
+        })
+        target.classList.add('selected')
 
         // let min_date = new Date(datetimepicker_options['min_date'])
         // let max_date = new Date(datetimepicker_options['max_date'])
 
         // save selected date
-        this.finalDate.date = $(e.currentTarget).text()
+        this.finalDate.date = target.textContent
         this.finalDate.year = this.viewingDate.year
         this.finalDate.month = this.viewingDate.month
 
@@ -607,7 +622,7 @@ function bindWidgetEvents() {
             hr24 = this.finalTime.hour
         else
             hr24 = parseInt(this.finalTime.hour) + 12
-        
+
         this.dateObject = new Date(this.finalDate.year, this.finalDate.month, this.finalDate.date, hr24, this.finalTime.minute )
     }.bind(this)
 }

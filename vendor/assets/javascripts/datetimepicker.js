@@ -1,4 +1,4 @@
-//= require datetimepicker-object 
+//= require datetimepicker-object
 
 let default_options = {
     'min_date': -1,
@@ -8,12 +8,12 @@ let default_options = {
 };
 let datetimepicker_active_objects = [];
 
-$(function () {
+function initDatetimepickers() {
     // Initialising datetimepicker objects
     // Saving them to an array
-    $.map($('.ui-datetime-picker-wrapper > .ui-datetime-picker-input'), function (d, index) {
-        let obj = new Datetimepicker($(d));
-        if ($(d).val() == "") {
+    document.querySelectorAll('.ui-datetime-picker-wrapper > .ui-datetime-picker-input').forEach(function (d) {
+        let obj = new Datetimepicker(d);
+        if (d.value == "") {
             obj.dateObject = new Date()
             obj.viewingDate.date = -1;
             obj.viewingDate.month = obj.dateObject.getMonth()
@@ -24,17 +24,16 @@ $(function () {
             obj.finalTime.minute = obj.dateObject.getMinutes()
             obj.finalTime.period = time[1]
 
-
             // display date according to format specified
-            if ($(d)[0].hasAttribute('datetimepicker_options')) {
-                let options = $(d).attr('datetimepicker_options')
-                obj.datetimepicker_options = { ...default_options, ...($.parseJSON(options)) }
+            if (d.hasAttribute('datetimepicker_options')) {
+                let options = d.getAttribute('datetimepicker_options')
+                obj.datetimepicker_options = { ...default_options, ...JSON.parse(options) }
             } else {
                 obj.datetimepicker_options = default_options
             }
 
         } else {
-            let val = $(d).val()
+            let val = d.value
 
             // for firefox browser
             val = val.replace(' UTC', '')
@@ -50,33 +49,41 @@ $(function () {
             obj.finalTime.minute = obj.dateObject.getMinutes()
             obj.finalTime.period = time[1]
 
-
             // display date according to format specified
-            let options = $(d).attr('datetimepicker_options')
+            let options = d.getAttribute('datetimepicker_options')
 
-            obj.datetimepicker_options = { ...default_options, ...($.parseJSON(options)) }
+            obj.datetimepicker_options = { ...default_options, ...JSON.parse(options) }
 
             let formatted_date = formatDateTime(obj.dateObject, obj.viewingDate, obj.finalTime, obj.datetimepicker_options["format"])
-            $(d).val(formatted_date)
+            d.value = formatted_date
         }
 
-        d.addEventListener('click', function(){
+        d.addEventListener('click', function () {
             obj.initDateTimePicker.bind(obj)()
             datetimepicker_active_objects.push(obj)
         })
     })
-})
+}
 
-$(document)[0].addEventListener('click', function (e) {
-    if(datetimepicker_active_objects.length > 0){
-        if (($('.ui-datetime-picker-wrapper').find($(e.target)).length == 0) || ($(e.target).hasClass('ui-datetime-picker-input'))){
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initDatetimepickers)
+} else {
+    initDatetimepickers()
+}
+
+document.addEventListener('click', function (e) {
+    if (datetimepicker_active_objects.length > 0) {
+        let clicked_inside_wrapper = e.target.closest('.ui-datetime-picker-wrapper') != null
+        if ((!clicked_inside_wrapper) || (e.target.classList.contains('ui-datetime-picker-input'))) {
             let obj_to_remove = datetimepicker_active_objects.shift()
             // set value of input field with selected date
             if ((!(obj_to_remove.finalDate.date == null))) {
-                formatted_date = formatDateTime(obj_to_remove.dateObject, obj_to_remove.finalDate, obj_to_remove.finalTime, obj_to_remove.datetimepicker_options["format"])
-                $(obj_to_remove.dateInputElement).val(formatted_date)
+                let formatted_date = formatDateTime(obj_to_remove.dateObject, obj_to_remove.finalDate, obj_to_remove.finalTime, obj_to_remove.datetimepicker_options["format"])
+                obj_to_remove.dateInputElement.value = formatted_date
             }
-            $(obj_to_remove.dateInputElement).next().remove()
+            if (obj_to_remove.widget) {
+                obj_to_remove.widget.remove()
+            }
         }
     }
 }, true)

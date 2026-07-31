@@ -30,6 +30,33 @@ Or install it yourself as:
 
 <br/><br/>
 
+## ActiveAdmin 4 Beta Support
+
+This branch/version targets [ActiveAdmin 4's beta releases](https://github.com/activeadmin/activeadmin) (`>= 4.0.0.beta1, < 5`), which are not yet stable on RubyGems. Install with:
+
+```ruby
+gem 'activeadmin', '>= 4.0.0.beta1', '< 5'
+gem 'date_n_time_picker_activeadmin', '>= 0.1.4.beta1'
+```
+
+ActiveAdmin 4 replaced its Sprockets/Sass stylesheet and jQuery-based JS with a Tailwind CSS + importmap-rails setup, and no longer ships an `active_admin.scss`/`active_admin.js` you can `@import`/`//= require` into. As of this release, this gem's own assets are jQuery-free vanilla JS, but are still delivered via Sprockets (not Tailwind's CLI build, which doesn't compile Sass). To wire them into an ActiveAdmin 4 app:
+
+1. Keep (or add) a Sprockets Sass compiler in your host app, e.g. `gem 'dartsass-sprockets'`, since ActiveAdmin 4 apps typically no longer include one.
+2. Add explicit `link` entries to `app/assets/config/manifest.js` so Sprockets precompiles the gem's assets, since they live outside `app/assets`:
+   ```
+   //= link date_n_time_picker_activeadmin.css
+   //= link date_n_time_picker_activeadmin.js
+   ```
+3. Override `app/views/active_admin/_html_head.html.erb` (copy it from the `activeadmin` gem, or run `rails g active_admin:views html_head`) and add:
+   ```erb
+   <%= stylesheet_link_tag "date_n_time_picker_activeadmin" %>
+   <%= javascript_include_tag "date_n_time_picker_activeadmin" %>
+   ```
+
+See `test_app/blog` on this branch for a complete working example.
+
+<br/><br/>
+
 ## Usage
 
 Code Sample
@@ -38,18 +65,20 @@ Code Sample
 f.input :column_name, as: :datetimepicker
 ```
 
-CSS
+CSS (ActiveAdmin 3, or any Sprockets/Sass stylesheet)
 In active_admin.scss, add the line,
 
 ```css
 @import date_n_time_picker_activeadmin
 ```
-JS
+JS (ActiveAdmin 3, or any Sprockets JS manifest)
 In active_admin.js, add the line,
 
 ```js
 //= require date_n_time_picker_activeadmin
 ```
+
+For ActiveAdmin 4, see [ActiveAdmin 4 Beta Support](#activeadmin-4-beta-support) above.
 
 <br/><br/>
 

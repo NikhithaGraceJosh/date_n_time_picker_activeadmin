@@ -1,0 +1,17 @@
+<%= stylesheet_link_tag "active_admin" %>
+<%# date_n_time_picker_activeadmin ships Sass/font-awesome assets compiled via Sprockets,
+    running alongside (not through) ActiveAdmin 4's Tailwind build. See UPGRADING.md. %>
+<%= stylesheet_link_tag "date_n_time_picker_activeadmin" %>
+<%= javascript_include_tag "date_n_time_picker_activeadmin" %>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<%= csrf_meta_tags %>
+<%= csp_meta_tag %>
+<% # On page load or when changing themes, best to add inline in `head` to avoid FOUC %>
+<%= javascript_tag nonce: true do %>
+  if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+    document.documentElement.classList.add('dark')
+  } else {
+    document.documentElement.classList.remove('dark')
+  }
+<% end %>
+<%= javascript_importmap_tags "active_admin", importmap: ActiveAdmin.importmap %>
