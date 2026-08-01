@@ -346,7 +346,7 @@ function Datetimepicker(element) {
 
     this.fillHeaderMinutePicker = function () {
         this.widget.querySelector('.header').className = 'header minutepicker'
-        this.widget.querySelector('.header.hourpicker').innerHTML = `<span> Select Minute</span> `
+        this.widget.querySelector('.header.minutepicker').innerHTML = `<span> Select Minute</span> `
     }
 
     this.fillBodyMinutePicker = function () {

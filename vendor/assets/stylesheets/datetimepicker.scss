@@ -4,7 +4,7 @@
     width: 277px;
     z-index: 2000;
     position: absolute;
-    margin-left: 20%;
+    margin-left: 1%;
     margin-top: 5px;
     border: 1px solid grey;
     justify-content: center;
@@ -33,6 +33,9 @@
     }
 
     .body.datepicker{
+        table{
+            width: 100%;
+        }
         table thead{
             th{
                 background: $date-n-time-picker-container-color;
@@ -43,7 +46,7 @@
             text-align: center;
             &:hover{
                 cursor: pointer;
-                &:not(.selected){
+                &:not(.selected):not(.disabled){
                     background-color: $date-n-time-picker-primary-color;
                     opacity: 0.5;
                     color: $date-n-time-picker-primary-text-color;
@@ -56,6 +59,13 @@
                 color: $date-n-time-picker-primary-text-color;
                 border-radius: 5px;
                 font-weight: bold;
+            }
+            &.disabled{
+                color: darkgrey;
+                cursor: not-allowed;
+                &:hover{
+                    cursor: not-allowed;
+                }
             }
         }
         th, td, caption {
