@@ -35,7 +35,7 @@ gem 'activeadmin', '>= 4.0.0.beta1', '< 5'
 # Plus integrations with:
 gem 'devise'
 
-gem 'date_n_time_picker_activeadmin', path: '../../'
+gem 'date_n_time_picker_activeadmin', github: 'NikhithaGraceJosh/date_n_time_picker_activeadmin', branch: 'beta/activeadmin4.0'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
